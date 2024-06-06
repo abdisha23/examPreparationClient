@@ -1,0 +1,282 @@
+{
+    "Mathematics": [
+      {
+        "question": "What is 2 + 2?",
+        "answers": ["3", "4", "5", "6"],
+        "correctAnswer": "4",
+        "answersExplanations": [
+          "2 + 2 = 4, so the correct answer is 4.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "Solve for x: 3x - 7 = 14",
+        "answers": ["3", "5", "7", "9"],
+        "correctAnswer": "7",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "3x = 21, so x = 7.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is the square root of 64?",
+        "answers": ["4", "6", "8", "10"],
+        "correctAnswer": "8",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "The square root of 64 is 8.",
+          "Incorrect answer."
+        ]
+      }
+    ],
+    "Physics": [
+      {
+        "question": "What is Newton's first law of motion?",
+        "answers": ["An object in motion stays in motion.", "Force equals mass times acceleration.", "For every action, there is an equal and opposite reaction.", "Objects at rest tend to stay at rest unless acted upon by an external force."],
+        "correctAnswer": "Objects at rest tend to stay at rest unless acted upon by an external force.",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Newton's first law states that objects at rest tend to stay at rest unless acted upon by an external force."
+        ]
+      },
+      {
+        "question": "What is the SI unit of force?",
+        "answers": ["Newton", "Watt", "Joule", "Pascal"],
+        "correctAnswer": "Newton",
+        "answersExplanations": [
+          "Newton is the SI unit of force.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is the speed of light in a vacuum?",
+        "answers": ["300,000 km/s", "200,000 km/s", "400,000 km/s", "500,000 km/s"],
+        "correctAnswer": "300,000 km/s",
+        "answersExplanations": [
+          "The speed of light in a vacuum is approximately 300,000 km/s.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      }
+    ],
+    "Chemistry": [
+      {
+        "question": "What is the chemical symbol for water?",
+        "answers": ["H2O", "CO2", "NaCl", "O2"],
+        "correctAnswer": "H2O",
+        "answersExplanations": [
+          "H2O is the chemical symbol for water.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is the atomic number of oxygen?",
+        "answers": ["6", "8", "10", "12"],
+        "correctAnswer": "8",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "8 is the atomic number of oxygen.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is the pH of a neutral solution?",
+        "answers": ["0", "7", "14", "1"],
+        "correctAnswer": "7",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "A neutral solution has a pH of 7.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      }
+    ],
+    "Biology": [
+      {
+        "question": "What is the powerhouse of the cell?",
+        "answers": ["Nucleus", "Mitochondria", "Ribosome", "Endoplasmic reticulum"],
+        "correctAnswer": "Mitochondria",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "Mitochondria is the powerhouse of the cell.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is the largest organ in the human body?",
+        "answers": ["Brain", "Heart", "Skin", "Liver"],
+        "correctAnswer": "Skin",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Skin is the largest organ in the human body.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is the function of red blood cells?",
+        "answers": ["Transport oxygen", "Produce antibodies", "Digest food", "Store energy"],
+        "correctAnswer": "Transport oxygen",
+        "answersExplanations": [
+          "Red blood cells transport oxygen.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      }
+    ],
+    "History": [
+      {
+        "question": "Who was the first President of the United States?",
+        "answers": ["Thomas Jefferson", "George Washington", "Abraham Lincoln", "John Adams"],
+        "correctAnswer": "George Washington",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "George Washington was the first President of the United States.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "In which year did World War II end?",
+        "answers": ["1943", "1945", "1950", "1955"],
+        "correctAnswer": "1945",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "World War II ended in 1945.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "Who wrote 'Romeo and Juliet'?",
+        "answers": ["William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"],
+        "correctAnswer": "William Shakespeare",
+        "answersExplanations": [
+          "William Shakespeare wrote 'Romeo and Juliet'.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      }
+    ],
+    "Aptitude": [
+      {
+        "question": "If a car travels at a speed of 50 miles per hour, how far can it travel in 2 hours?",
+        "answers": ["50 miles", "100 miles", "150 miles", "200 miles"],
+        "correctAnswer": "100 miles",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "50 miles/hour * 2 hours = 100 miles.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is 25% of 200?",
+        "answers": ["25", "50", "75", "100"],
+        "correctAnswer": "50",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "25% of 200 is 50.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "If x + 5 = 10, what is the value of x?",
+        "answers": ["5", "10", "15", "20"],
+        "correctAnswer": "5",
+        "answersExplanations": [
+          "x + 5 = 10, so x = 5.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      }
+    ],
+    "Economics": [
+      {
+        "question": "What is inflation?",
+        "answers": ["Decrease in prices", "Increase in prices", "Stable prices", "No change in prices"],
+        "correctAnswer": "Increase in prices",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "Inflation refers to an increase in prices.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is the law of supply and demand?",
+        "answers": ["Higher demand leads to higher prices", "Higher demand leads to lower prices", "Higher supply leads to lower prices", "Higher supply leads to higher prices"],
+        "correctAnswer": "Higher demand leads to higher prices",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "The law of supply and demand states that higher demand leads to higher prices.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is GDP?",
+        "answers": ["Gross Domestic Product", "Government Development Plan", "Generalized Development Plan", "Gross Demand Product"],
+        "correctAnswer": "Gross Domestic Product",
+        "answersExplanations": [
+          "GDP stands for Gross Domestic Product.",
+          "Incorrect answer.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      }
+    ],
+    "English": [
+      {
+        "question": "What is the past tense of 'run'?",
+        "answers": ["Run", "Ran", "Running", "Runs"],
+        "correctAnswer": "Ran",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "'Ran' is the past tense of 'run'.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "Which word is a synonym of 'happy'?",
+        "answers": ["Sad", "Joyful", "Angry", "Excited"],
+        "correctAnswer": "Joyful",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "'Joyful' is a synonym of 'happy'.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      },
+      {
+        "question": "What is the plural form of 'child'?",
+        "answers": ["Childs", "Childen", "Children", "Childes"],
+        "correctAnswer": "Children",
+        "answersExplanations": [
+          "Incorrect answer.",
+          "'Children' is the plural form of 'child'.",
+          "Incorrect answer.",
+          "Incorrect answer."
+        ]
+      }
+    ]
+  }
