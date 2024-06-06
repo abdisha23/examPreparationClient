@@ -28,17 +28,13 @@ const Footer = () => {
       <Box
         component="footer"
         sx={{
-          py: 2,
-          background: theme.palette.primary.dark,
-          color: theme.palette.common.white,
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          bottom: 0,
-          left: 0,
-          width: '100%',
-          zIndex: 1000,
-        }}
+            py: 3,
+            background: theme.palette.primary.dark,
+            color: theme.palette.common.white,
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'space-evenly',
+          }}
       >
         <Box sx={{ mr: 6 }}>
           <Typography variant="h6" sx={{ color: theme.palette.secondary.main }}>
@@ -65,6 +61,14 @@ const Footer = () => {
             Privacy Policy
           </Button>
         </Box>
+        <Box>
+            <Typography variant="h6" sx={{ color: theme.palette.secondary.main }}>
+              Our Products
+            </Typography>
+            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Articles</Button>
+            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Courses</Button>
+            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Ebooks</Button>
+          </Box>
       </Box>
     </ThemeProvider>
   );

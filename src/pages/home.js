@@ -8,8 +8,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#334D68',
-      dark: '#37424D',
+      main: '#3F5D7A',
+      dark: '#425B6E',
     },
     secondary: {
       main: '#EBD2DB',
@@ -93,43 +93,6 @@ const HomePage = () => {
             </Grid>
           </Grid>
         </Container>
-
-        {/* Footer */}
-        <Box
-          component="footer"
-          sx={{
-            py: 3,
-            background: theme.palette.primary.dark,
-            color: theme.palette.common.white,
-            textAlign: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Box sx={{ mr: 6 }}>
-            <Typography variant="h6" sx={{ color: theme.palette.secondary.main }}>
-              About Us
-            </Typography>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Company</Button>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Our Teams</Button>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Careers</Button>
-          </Box>
-          <Box sx={{ mr: 6 }}>
-            <Typography variant="h6" sx={{ color: theme.palette.secondary.main }}>
-              Terms
-            </Typography>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Terms of Use</Button>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Privacy Policy</Button>
-          </Box>
-          <Box>
-            <Typography variant="h6" sx={{ color: theme.palette.secondary.main }}>
-              Our Products
-            </Typography>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Articles</Button>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Courses</Button>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>Ebooks</Button>
-          </Box>
-        </Box>
       </Box>
     </ThemeProvider>
   );

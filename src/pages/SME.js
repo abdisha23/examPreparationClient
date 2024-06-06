@@ -17,7 +17,7 @@ const validationSchema = Yup.object({
     .min(10, 'Phone number must be at least 10 digits')
     .max(15, 'Phone number cannot exceed 15 digits')
     .required('Phone number is required'),
-  expertise: Yup.string().required('Area of Expertise is required'),
+  areaOfExpertise: Yup.string().required('Area of Expertise is required'),
 });
 
 const SME = () => {
@@ -29,11 +29,12 @@ const SME = () => {
       email: '',
       password: '',
       phone: '',
-      expertise: '',
+      areaOfExpertise: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(registerUser(values));
+    
     },
   });
 
@@ -159,15 +160,15 @@ const SME = () => {
           />
         </FormControl>
         <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel id="expertise-label" sx={{ backgroundColor: '#fff', paddingRight: '4px' }}>Area of Expertise</InputLabel>
+          <InputLabel id="areaOfExpertise-label" sx={{ backgroundColor: '#fff', paddingRight: '4px' }}>Area of Expertise</InputLabel>
           <Select
-            labelId="expertise-label"
-            id="expertise"
-            name="expertise"
-            value={formik.values.expertise}
+            labelId="areaOfExpertise-label"
+            id="areaOfExpertise"
+            name="areaOfExpertise"
+            value={formik.values.areaOfExpertise}
             onChange={formik.handleChange}
             label="Area of Expertise"
-            error={formik.touched.expertise && Boolean(formik.errors.expertise)}
+            error={formik.touched.areaOfExpertise && Boolean(formik.errors.areaOfExpertise)}
             sx={{
               backgroundColor: '#fff',
               borderRadius: '4px',

@@ -1,19 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Typography, Container, Button, Box, Grid, Card, CardContent, AppBar, Toolbar, IconButton } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = () => {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  const [productOpt, setProductOpt] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  //const selectedArray = Array.isArray(selectedProduct) ? selectedProduct : selectedProduct ? [selectedProduct] : [];
-  const [paginate, setPaginate ] = useState(true);
-  const authState = useSelector((state) => state?.auth);
+  const [currentUser, setCurrentUser] = useState(null);
 
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    setCurrentUser(storedUser);
+  }, []);
+  
   const theme = createTheme({
     palette: {
       primary: {
@@ -33,6 +32,7 @@ const Header = () => {
   });
   const  handleLogout = () => {
     localStorage.clear();
+    setCurrentUser(null);
     window.location.reload();
   }
   return (
@@ -66,18 +66,15 @@ const Header = () => {
           <Button color="inherit" component={Link} to="/signup">
             Get Started
           </Button>
-          <Button color="inherit" component={Link} to="/login">
-          {
-                      authState?.user === null && authState?.user?.areasOfExpertise !== null ? <p className='mb-0'>Login</p>
-                      : <p className='mb-0'>Welcome {authState?.user?.areasOfExpertise + " !"}</p>
-                    }
-          </Button>
-          
-          {
-                  localStorage.getItem("user") !== null && <>
-                    <Button color="inherit" component={Link} to="/login" onClick={handleLogout}>Logout</Button>
-                  </>
-                  }
+          {currentUser ? (
+            <Button color="inherit" component={Link} to="/" onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : (
+            <Button color="inherit" component={Link} to="/login">
+              Login
+            </Button>
+          )}
 
         </Toolbar>
       </AppBar>

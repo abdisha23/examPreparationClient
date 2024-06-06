@@ -135,6 +135,7 @@ const initialState = {
             state.user = action.payload;
             if(state.isSuccess === true){
                 toast.success("You are logged in successfully!")
+                
             }
             
         })
