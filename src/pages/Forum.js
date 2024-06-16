@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Container,
   Typography,
@@ -15,8 +16,10 @@ import {
   Grid,
   Divider
 } from '@mui/material';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
+import {createForumPost, getForumPost} from "../features/forum/forumSlice";
+import { getAllCourses } from '../features/course/courseSlice';
 
 const theme = createTheme({
   palette: {
@@ -58,40 +61,48 @@ const theme = createTheme({
     },
   },
 });
-
+const forumSchema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
+  post: Yup.string().required('Content is required'),
+});
 const Forum = () => {
+  const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
   const [discussions, setDiscussions] = useState([]);
 
   useEffect(() => {
+    dispatch(getForumPost())
+    dispatch(getAllCourses());
     const fetchedCategories = ['General', 'Technical', 'Q&A'];
     const fetchedDiscussions = [
       { id: 1, category: 'General', topic: 'Welcome to the Forum', author: 'Admin', responses: 10 },
-      { id: 2, category: 'Technical', topic: 'What is electricity?', author: 'UserA', responses: 5 },
+      { id: 2, category: 'Technical', topic: {}, author: 'UserA', responses: 5 },
     ];
     setCategories(fetchedCategories);
     setDiscussions(fetchedDiscussions);
   }, []);
 
-  const initialValues = {
-    postTitle: '',
-    postContent: '',
-  };
+  const currentUser = JSON.parse(localStorage.getItem('user'));
 
-  const validationSchema = Yup.object().shape({
-    postTitle: Yup.string().required('Title is required'),
-    postContent: Yup.string().required('Content is required'),
-  });
+  const formik = useFormik({
+    initialValues: {
+        subject: 'Biology',
+        title: '',
+        post: '',
+        postedBy: currentUser._id,
+      },
+      validationSchema: forumSchema,
+      onSubmit: ((values) => {
+        dispatch(createForumPost(values));
+        }),
+    });
 
-  const handlePostSubmit = (values, { resetForm }) => {
-    const postWithTimestamp = {
-      ...values,
-      timestamp: new Date().toISOString(),
-    };
-    console.log('Posting:', postWithTimestamp);
-    resetForm();
-  };
 
+  // const handlePostSubmit = (values, { resetForm }) => {
+  //   dispatch((values));
+  //   // resetForm();
+  // };
+const forumState = useSelector((state) => state?.forum?.allForumPosts);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -111,7 +122,7 @@ const Forum = () => {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <Typography variant="h5" style={{ color: '#4A4A4A', marginBottom: '10px' }}>
               Categories
             </Typography>
@@ -122,18 +133,20 @@ const Forum = () => {
                 </ListItem>
               ))}
             </List>
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} sm={6}>
             <Typography variant="h5" style={{ color: '#4A4A4A', marginBottom: '10px' }}>
               Discussions
             </Typography>
-            {discussions.map((discussion) => (
-              <Box key={discussion.id} style={{ marginBottom: '20px' }}>
-                <Typography variant="h6">{discussion.topic}</Typography>
-                <Typography variant="subtitle2">Category: {discussion.category}</Typography>
-                <Typography variant="body1">Author: {discussion.author}</Typography>
-                <Typography variant="body2">Responses: {discussion.responses}</Typography>
+            {forumState?.map((forum, index) => (
+              <Box key={index} style={{ marginBottom: '20px' }}>
+                <Typography variant="h6">{forum.title}</Typography>
+                <Typography variant="subtitle2">Question: {forum.post}</Typography>
+                <Typography variant="body1">Posted by: {forum.postedBy}</Typography>
+                {/* <Typography variant="body2">Responses: {forum.postReplies.map((reply, index) => {
+                  reply.title
+                })}</Typography> */}
                 <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
               </Box>
             ))}
@@ -145,47 +158,37 @@ const Forum = () => {
         <Typography variant="h5" style={{ color: '#4A4A4A', marginBottom: '20px' }}>
           Create a Post
         </Typography>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handlePostSubmit}
-        >
-          {({ values, handleChange, handleBlur, touched, errors }) => (
-            <Form>
-              <Field
-                as={TextField}
-                name="postTitle"
+            <form onSubmit={formik.handleSubmit}>
+              <TextField
+                name="title"
                 label="Post Title"
                 variant="outlined"
                 fullWidth
-                value={values.postTitle}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={!!errors.postTitle && touched.postTitle}
-                helperText={<ErrorMessage name="postTitle" />}
+                value={formik.values.title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.title && Boolean(formik.errors.title)}
+                helperText={formik.touched.title && formik.errors.title}
                 style={{ marginBottom: '20px' }}
               />
-              <Field
-                as={TextField}
-                name="postContent"
+              <TextField
+                name="post"
                 label="Post Content"
                 multiline
                 rows={4}
                 variant="outlined"
                 fullWidth
-                value={values.postContent}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={!!errors.postContent && touched.postContent}
-                helperText={<ErrorMessage name="postContent" />}
+                value={formik.values.post}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.post && Boolean(formik.errors.post)}
+                helperText={formik.touched.post && formik.errors.post}
                 style={{ marginBottom: '20px' }}
               />
               <Button type="submit" variant="contained" color="primary" style={{ marginTop: '10px' }}>
                 Post
               </Button>
-            </Form>
-          )}
-        </Formik>
+            </form>
       </Container>
     </ThemeProvider>
   );

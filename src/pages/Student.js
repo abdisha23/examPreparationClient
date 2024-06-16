@@ -21,7 +21,7 @@ const theme = createTheme({
   },
 });
 
-const validationSchema = Yup.object({
+const signupSchema = Yup.object({
   firstName: Yup.string().required('First Name is required!'),
   lastName: Yup.string().required('Last Name is required!'),
   email: Yup.string().email('Invalid email format!').required('Email is required!'),
@@ -43,7 +43,7 @@ const Student = () => {
       phone: '',
       role: 'student'
     },
-    validationSchema: validationSchema,
+    validationSchema: signupSchema,
     onSubmit: (values) => {
       dispatch(registerUser(values));
     },

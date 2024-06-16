@@ -5,7 +5,9 @@ import HomePage from './pages/home';
 import MaterialAccess from './pages/AccessMaterial';
 import TrackProgress from './pages/TrackProgress';
 import Quiz from './pages/Quiz';
+import UploadExam from './pages/uploadExam';
 import TakeExam from './pages/TakeExam';
+import UploadQuiz from './pages/uploadQuiz';
 import Forum from './pages/Forum';
 import Signup from './pages/signup';
 import Login from './pages/login';
@@ -22,7 +24,9 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path="/access-material" element={<MaterialAccess />} />
           <Route path="/track-progress" element={<TrackProgress />} />
+          <Route path="/upload-exam" element={<UploadExam />} />
           <Route path="/take-exam" element={<TakeExam />} />
+          <Route path="/upload-quiz" element={<UploadQuiz />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/quiz" element={<Quiz />} />

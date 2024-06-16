@@ -1,15 +1,24 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReduce from "../features/user/userSlice";
-// import productReducer from "../features/product/productSlice";
-// import blogReducer from '../features/blog/blogSlice';
-// import contactReducer from '../features/contact/contactSlice';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import authReducer from "../features/user/userSlice";
+import courseReducer from '../features/course/courseSlice';
+import materialReducer from "../features/courseMaterial/courseMaterialSlice";
+import forumReducer from '../features/forum/forumSlice';
+import examReducer from '../features/exam/examSlice';
+import quizReducer from '../features/quiz/quizSlice';
 
 export const store = configureStore({
   reducer: {
-    auth: authReduce,
-    // product: productReducer,
-    // blog: blogReducer,
-    // contact: contactReducer
+    auth: authReducer,
+    courses: courseReducer,
+    courseMaterials: materialReducer,
+    forum: forumReducer,
+    exams: examReducer,
+    quizzes: quizReducer
   },
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActionPaths: ['payload.error'],
+    },
+  }),
 });
 

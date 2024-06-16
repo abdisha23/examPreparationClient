@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import  { createGlobalStyle } from 'styled-components';
-import { Container, Grid, Button, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { createGlobalStyle } from 'styled-components';
+import { Container, Grid, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { getAllCourseMaterials } from '../features/courseMaterial/courseMaterialSlice';
+import { getAllCourses } from '../features/course/courseSlice';
 
 const theme = createTheme({
   palette: {
@@ -23,200 +26,75 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const globalStyles = {
-  backgroundColor: '#C59090', 
+  backgroundColor: '#C59090',
   padding: '20px',
 };
 
-const subjects = [
-  {
-    name: 'Physics',
-    grade: '9-12',
-    chapters: [
-      { title: 'Chapter 1', materials: ['Notes', 'Videos', 'PDFs'] },
-      { title: 'Chapter 2', materials: ['Notes', 'Videos', 'PDFs'] },
-    ],
-  },
-  {
-    name: 'Mathematics',
-    grade: '9-12',
-    chapters: [
-      { title: 'Chapter 1', materials: ['Notes', 'Videos', 'PDFs'] },
-      { title: 'Chapter 2', materials: ['Notes', 'Videos', 'PDFs'] },
-    ],
-  },
-  {
-    name: 'English',
-    grade: '9-12',
-    chapters: [
-      { title: 'Chapter 1', materials: ['Notes', 'Videos', 'PDFs'] },
-      { title: 'Chapter 2', materials: ['Notes', 'Videos', 'PDFs'] },
-    ],
-  },
-  {
-    name: 'History',
-    grade: '9-12',
-    chapters: [
-      { title: 'Chapter 1', materials: ['Notes', 'Videos', 'PDFs'] },
-      { title: 'Chapter 2', materials: ['Notes', 'Videos', 'PDFs'] },
-    ],
-  },
-  {
-    name: 'Chemistry',
-    grade: '9-12',
-    chapters: [
-      { title: 'Chapter 1', materials: ['Notes', 'Videos', 'PDFs'] },
-      { title: 'Chapter 2', materials: ['Notes', 'Videos', 'PDFs'] },
-    ],
-  },
-  {
-    name: 'Biology',
-    grade: '9-12',
-    chapters: [
-      { title: 'Chapter 1', materials: ['Notes', 'Videos', 'PDFs'] },
-      { title: 'Chapter 2', materials: ['Notes', 'Videos', 'PDFs'] },
-    ],
-  },
-  {
-    name: 'Aptitude',
-    grade: '9-12',
-    chapters: [
-      { title: 'Chapter 1', materials: ['Notes', 'Videos', 'PDFs'] },
-      { title: 'Chapter 2', materials: ['Notes', 'Videos', 'PDFs'] },
-    ],
-  },
-  {
-    name: 'Economics',
-    grade: '9-12',
-    chapters: [
-      { title: 'Chapter 1', materials: ['Notes', 'Videos', 'PDFs'] },
-      { title: 'Chapter 2', materials: ['Notes', 'Videos', 'PDFs'] },
-    ],
-  },
-];
-
 function MaterialAccess() {
-  const [selectedSubject, setSelectedSubject] = useState(null);
-  const [selectedChapter, setSelectedChapter] = useState(null);
-  const [viewingChapters, setViewingChapters] = useState(false);
-  const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
+  const dispatch = useDispatch();
+  const courseState = useSelector((state) => state.courses.course);
+  const materialState = useSelector((state) => state?.courseMaterials?.courseMaterial);
 
-  const handleSubjectSelect = (subject) => {
-    setSelectedSubject(subject);
-    setSelectedChapter(subject.chapters[0]);
-    setViewingChapters(true);
-    setCurrentChapterIndex(0);
+  useEffect(() => {
+    dispatch(getAllCourses());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedCourseId) {
+      dispatch(getAllCourseMaterials(selectedCourseId));
+    }
+  }, [selectedCourseId, dispatch]);
+
+  const handleCourseClick = (courseId) => {
+    setSelectedCourseId(courseId);
   };
 
-  const handlePreviousChapter = () => {
-    if (viewingChapters && currentChapterIndex > 0) {
-      setSelectedChapter(selectedSubject.chapters[currentChapterIndex - 1]);
-      setCurrentChapterIndex(currentChapterIndex - 1);
-    } else {
-      setViewingChapters(false);
-    }
-  };
-
-  const handleNextChapter = () => {
-    if (currentChapterIndex < selectedSubject.chapters.length - 1) {
-      setSelectedChapter(selectedSubject.chapters[currentChapterIndex + 1]);
-      setCurrentChapterIndex(currentChapterIndex + 1);
-    }
+  const renderMaterials = () => {
+    if (!selectedCourseId) {
+      console.log('No course is selected');
+    };
+    return (
+      <div>
+        {materialState?.map((material) => (
+          <div key={material._id}>
+            <h3>{material.title}</h3>
+            <p>{material.description}</p>
+            <a href={material.file.url} target="_blank" rel="noopener noreferrer">Download File</a>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   const renderSubjectSelection = () => (
     <div>
       <Typography variant="h4" className="title">Select a Subject</Typography>
       <List>
-        {subjects.map((subject, index) => (
-          <ListItem button key={index} onClick={() => handleSubjectSelect(subject)}>
-            <ListItemText primary={subject.name} />
+        {courseState && courseState.map((course) => (
+          <ListItem
+            button
+            key={course._id}
+            onClick={() => handleCourseClick(course._id)}
+          >
+            <ListItemText primary={course.title} />
           </ListItem>
         ))}
       </List>
     </div>
   );
 
-  const renderChapterNavigation = () => (
-    <div>
-      <Typography variant="h4" className="title">{selectedSubject.name} - {selectedChapter.title}</Typography>
-      <Typography variant="body1">Boost your knowledge on the chapter with the following materials</Typography>
-      <div className="button-group" style={{ display: 'flex', gap: '10px', marginBottom: 15 }}>
-        {currentChapterIndex > 0 && (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handlePreviousChapter}
-            className="material-button"
-          >
-            Previous Chapter
-          </Button>
-        )}
-        {currentChapterIndex < selectedSubject.chapters.length - 1 && (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleNextChapter}
-            className="material-button"
-          >
-            Next Chapter
-          </Button>
-        )}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setViewingChapters(false)}
-          className="material-button"
-        >
-          Back to Subjects
-        </Button>
-      </div>
-      <div className="button-group" style={{ display: 'flex', gap: '20px' }}>
-        {selectedChapter.materials.map((material, index) => (
-          <Button
-            key={index}
-            variant="outlined"
-            color="primary"
-            className="material-button"
-            onClick={() => handleMaterialDownload(material)}
-          >
-            View {material}
-          </Button>
-        ))}
-        <Button
-          variant="outlined"
-          color="primary"
-          className="material-button"
-          onClick={handleMaterialDownloadAll}
-        >
-          Download
-        </Button>
-      </div>
-    </div>
-  );
-
-  const handleMaterialDownload = (material) => {
-    console.log(`View/Download ${material}`);
-  };
-
-  const handleMaterialDownloadAll = () => {
-    console.log('Download All Materials');
-  };
-
   return (
     <ThemeProvider theme={theme}>
-    <GlobalStyle styles={{ body: { GlobalStyle} }}/>
+      <GlobalStyle />
       <Container maxWidth="md" style={globalStyles}>
         <Grid container spacing={3}>
-          {!viewingChapters && (
-            <Grid item xs={12}>
-              {renderSubjectSelection()}
-            </Grid>
-          )}
-          {viewingChapters && (
-            <Grid item xs={12}>
-              {renderChapterNavigation()}
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            {renderSubjectSelection()}
+          </Grid>
+          <Grid item xs={12}>
+            {renderMaterials()}
+          </Grid>
         </Grid>
       </Container>
     </ThemeProvider>

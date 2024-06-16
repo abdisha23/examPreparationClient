@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Container, Grid, Typography, List, ListItem, ListItemText, MenuItem, Select, Button } from '@mui/material';
+import { Container, Grid, Typography, List, ListItem, ListItemText, MenuItem, Select } from '@mui/material';
+import { getAllCourses } from '../features/course/courseSlice';
+import { getAllExams } from '../features/exam/examSlice';
 
 const theme = createTheme({
   palette: {
@@ -13,100 +16,97 @@ const theme = createTheme({
   },
 });
 
-const subjects = [
-  {
-    name: 'Physics',
-    grade: '9-12',
-    years: ['Year 2018', 'Year 2019', 'Year 2020', 'Year 2021', 'Year 2022'],
-  },
-  {
-    name: 'Mathematics',
-    grade: '9-12',
-    years: ['Year 2018', 'Year 2019', 'Year 2020', 'Year 2021', 'Year 2022'],
-  },
-  {
-    name: 'English',
-    grade: '9-12',
-    years: ['Year 2018', 'Year 2019', 'Year 2020', 'Year 2021', 'Year 2022'],
-  },
-  {
-    name: 'History',
-    grade: '9-12',
-    years:['Year 2018', 'Year 2019', 'Year 2020', 'Year 2021', 'Year 2022'],
-  },
-  {
-    name: 'Chemistry',
-    grade: '9-12',
-    years: ['Year 2018', 'Year 2019', 'Year 2020', 'Year 2021', 'Year 2022'],
-  },
-  {
-    name: 'Biology',
-    grade: '9-12',
-    years: ['Year 2018', 'Year 2019', 'Year 2020', 'Year 2021', 'Year 2022'],
-  },
-  {
-    name: 'Aptitude',
-    grade: '9-12',
-    years:['Year 2018', 'Year 2019', 'Year 2020', 'Year 2021', 'Year 2022'],
-  },
-  {
-    name: 'Economics',
-    grade: '9-12',
-    years: ['Year 2018', 'Year 2019', 'Year 2020', 'Year 2021', 'Year 2022'],
-  },
-];
-
 function TakeExam() {
-  const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedYear, setSelectedYear] = useState(null);
   const [viewingYears, setViewingYears] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null); // Define selectedCourse state
+  const dispatch = useDispatch();
+  const courseState = useSelector((state) => state?.courses?.course);
+  const examState = useSelector((state) => state?.exams?.allExams?.exam);
 
-  const handleSubjectSelect = (subject) => {
-    setSelectedSubject(subject);
-    setSelectedYear(subject.years[0]); // Default to the first year
-    setViewingYears(true);
-  };
+
+  useEffect(() => {
+    dispatch(getAllCourses());
+  }, [dispatch]);
+ 
+  const renderExam = (examYear) => {
+    return (
+      <div>
+        <Typography variant="h4" className="title">Exams for {examYear}</Typography>
+        <List>
+          {examState && examState.map((exam) => (
+            <ListItem key={exam._id}>
+              {/* <ListItemText primary={`Exam Title: ${exam.title}`} /> */}
+              <List>
+                {exam.questions.map((question, index) => (
+                  <ListItem key={question._id}>
+                    <ListItemText primary={`${index + 1}. ${question.question}`} />
+                    <List>
+                      {question.options.map((option, index) => (
+                        <ListItem key={index}>
+                          <ListItemText primary={`Option ${index + 1}: ${option}`} />
+                        </ListItem>
+                      ))}
+                    </List>
+                    <ListItemText primary={`Correct Answer: ${question.answer}`} />
+                  </ListItem>
+                ))}
+              </List>
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    );
+  }
+  
 
   const handleYearSelect = (year) => {
     setSelectedYear(year);
-    // Handle showing the exam page for the selected year
   };
 
-  const handleBackToSubjects = () => {
-    setSelectedSubject(null);
-    setSelectedYear(null);
-    setViewingYears(false);
+  const handleCourseClick = (course) => { // Accept course object as parameter
+    setSelectedCourse(course); // Set selectedCourse state to the clicked course
+    dispatch(getAllExams(course._id));
+    setViewingYears(true); // Set viewingYears to true to render year selection
   };
 
   const renderSubjectSelection = () => (
     <div>
       <Typography variant="h4" className="title">Select a Subject</Typography>
       <List>
-        {subjects.map((subject, index) => (
-          <ListItem button key={index} onClick={() => handleSubjectSelect(subject)}>
-            <ListItemText primary={subject.name} />
+        {courseState && courseState.map((course) => (
+          <ListItem
+            button
+            key={course._id}
+            onClick={() => handleCourseClick(course)} // Pass course object to handleCourseClick
+          >
+            <ListItemText primary={course.title} />
           </ListItem>
         ))}
       </List>
     </div>
   );
 
-  const renderYearSelection = () => (
-    <div>
-      <Typography variant="h4" className="title">{selectedSubject.name}</Typography>
-      <Typography variant="body1">Select a Year</Typography>
-      <Select
-        value={selectedYear}
-        onChange={(e) => handleYearSelect(e.target.value)}
-        className="year-select"
-      >
-        {selectedSubject.years.map((year, index) => (
-          <MenuItem key={index} value={year}>{year}</MenuItem>
-        ))}
-      </Select>
-      <Button variant="contained" color="primary" onClick={handleBackToSubjects}>Back to Subjects</Button>
-    </div>
-  );
+  const renderYearSelection = () => {
+    if (!selectedCourse) return null; 
+
+    return (
+      <div>
+        <Typography variant="h4" className="title">{selectedCourse.title}</Typography>
+        <Typography variant="body1">Select a Year</Typography>
+        <Select
+          value={selectedYear}
+          onChange={(e) => handleYearSelect(e.target.value)}
+          className="year-select"
+        >
+          {examState && examState.map((exam) => (
+            <MenuItem key={exam._id} value={exam.year}>{exam.year}</MenuItem>
+          ))}
+        </Select>
+        {/* <Button variant="contained" color="primary" onClick={handleBackToSubjects}>Back to Subjects</Button> */}
+      </div>
+    );
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -122,6 +122,11 @@ function TakeExam() {
               {renderYearSelection()}
             </Grid>
           )}
+          {selectedYear && 
+            <Grid item xs={12}>
+              {renderExam(selectedYear)}
+            </Grid>
+          }
         </Grid>
       </Container>
     </ThemeProvider>
