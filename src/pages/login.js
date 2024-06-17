@@ -158,7 +158,7 @@ const LoginPage = () => {
               </ForgotPasswordButton>
             </Grid>
             <Grid item xs={12}>
-              <Button color="inherit" variant="outlined" fullWidth>Sign Up</Button>
+              <Button color="inherit" variant="outlined" fullWidth component={Link} to="/student">Sign Up</Button>
             </Grid>
           </Grid>
         </form>

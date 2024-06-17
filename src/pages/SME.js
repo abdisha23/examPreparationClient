@@ -12,7 +12,7 @@ const validationSchema = Yup.object({
   lastName: Yup.string().required('Last Name is required'),
   email: Yup.string().email('Invalid email format').required('Email is required'),
   password: Yup.string().min(8, 'Password must be at least 8 characters!').required('Password is required!'),
-  phone: Yup.string()
+  phoneNumber: Yup.string()
     .matches(/^[0-9]+$/, 'Phone number must be only digits')
     .min(10, 'Phone number must be at least 10 digits')
     .max(15, 'Phone number cannot exceed 15 digits')
@@ -28,7 +28,7 @@ const SME = () => {
       lastName: '',
       email: '',
       password: '',
-      phone: '',
+      phoneNumber: '',
       areaOfExpertise: '',
     },
     validationSchema: validationSchema,
@@ -140,14 +140,14 @@ const SME = () => {
         </FormControl>
         <FormControl fullWidth sx={{ mb: 2 }}>
           <TextField
-            id="phone"
-            name="phone"
+            id="phoneNumber"
+            name="phoneNumber"
             label="Phone Number"
             variant="outlined"
-            value={formik.values.phone}
+            value={formik.values.phoneNumber}
             onChange={formik.handleChange}
-            error={formik.touched.phone && Boolean(formik.errors.phone)}
-            helperText={formik.touched.phone && formik.errors.phone}
+            error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
             sx={{
               backgroundColor: '#fff',
               borderRadius: '4px',
@@ -180,12 +180,12 @@ const SME = () => {
             }}
           >
             <MenuItem value="">Select</MenuItem>
-            <MenuItem value="Physics expert">Physics expert</MenuItem>
-            <MenuItem value="Maths expert">Maths expert</MenuItem>
-            <MenuItem value="English">English expert</MenuItem>
-            <MenuItem value="Aptitude">Aptitude expert</MenuItem>
-            <MenuItem value="Chemistry">Chemistry expert</MenuItem>
-            <MenuItem value="Biology">Biology expert</MenuItem>
+            <MenuItem value="Physics">Physics</MenuItem>
+            <MenuItem value="Maths">Maths</MenuItem>
+            <MenuItem value="English">English</MenuItem>
+            <MenuItem value="Aptitude">Aptitude</MenuItem>
+            <MenuItem value="Chemistry">Chemistry</MenuItem>
+            <MenuItem value="Biology">Biology</MenuItem>
           </Select>
         </FormControl>
         <Button

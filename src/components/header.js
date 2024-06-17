@@ -11,7 +11,7 @@ const Header = () => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     setCurrentUser(storedUser);
-  }, []);
+  }, [currentUser]);
   
   const theme = createTheme({
     palette: {
@@ -63,9 +63,6 @@ const Header = () => {
           <Button color="inherit" component={Link} to="/forum">
             Forums
           </Button>
-          <Button color="inherit" component={Link} to="/signup">
-            Get Started
-          </Button>
           {currentUser ? (
             <Button color="inherit" component={Link} to="/" onClick={handleLogout}>
               Logout
@@ -75,6 +72,9 @@ const Header = () => {
               Login
             </Button>
           )}
+          <Button color="inherit" component={Link} to="/signup">
+            Signup
+          </Button>
 
         </Toolbar>
       </AppBar>

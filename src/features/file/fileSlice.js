@@ -4,9 +4,9 @@ import {toast} from "react-toastify";
 import { quizService } from "./quizService";
 
 
-export const createAQuiz = createAsyncThunk(
+export const addACourse = createAsyncThunk(
     'quiz/create',
-    async ({ courseId, quizData }, thunkAPI) => {
+    async ({ courseTitle }, thunkAPI) => {
       try {
         return await quizService.createQuiz(courseId, quizData);
       } catch (error) {

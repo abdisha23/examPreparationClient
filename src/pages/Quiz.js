@@ -17,26 +17,25 @@ const theme = createTheme({
 });
 
 function TakeQuiz() {
-  const [selectedCourse, setSelectedCourse] = useState(null); // Define selectedCourse state
+  const [courseId, setCourseId] = useState(null); // Define courseId state
   const dispatch = useDispatch();
   const courseState = useSelector((state) => state?.courses?.course);
-  const quizState = useSelector((state) => state?.quizzes?.allQuizzes?.quiz);
+  const quizState = useSelector((state) => state?.quizzes?.allQuizzes);
 
 
   useEffect(() => {
     dispatch(getAllCourses());
   }, [dispatch]);
  
-  const renderQuiz = (examYear) => {
+  const renderQuiz = () => {
     return (
       <div>
-        <Typography variant="h4" className="title">Quizzes for {examYear}</Typography>
         <List>
           {quizState && quizState.map((quiz) => (
             <ListItem key={quiz._id}>
-              {/* <ListItemText primary={`Exam Title: ${quiz.title}`} /> */}
+              <Typography variant="h4">{quiz.quiz[0].title}</Typography> {/* Assuming quiz[0] holds the title */}
               <List>
-                {quiz.questions.map((question, index) => (
+                {quiz.quiz[0].questions.map((question, index) => (
                   <ListItem key={question._id}>
                     <ListItemText primary={`${index + 1}. ${question.question}`} />
                     <List>
@@ -57,13 +56,14 @@ function TakeQuiz() {
     );
   }
   
+  
 
   // const handleYearSelect = (year) => {
   //   setSelectedYear(year);
   // };
 
   const handleCourseClick = (course) => { // Accept course object as parameter
-    setSelectedCourse(course); // Set selectedCourse state to the clicked course
+    setCourseId(course._id); // Set courseId state to the clicked course
     dispatch(getAllQuizzes(course._id));
     // setViewingYears(true); // Set viewingYears to true to render year selection
   };
@@ -85,27 +85,6 @@ function TakeQuiz() {
     </div>
   );
 
-  // const renderYearSelection = () => {
-  //   if (!selectedCourse) return null; 
-
-  //   return (
-  //     <div>
-  //       <Typography variant="h4" className="title">{selectedCourse.title}</Typography>
-  //       <Typography variant="body1">Select a Year</Typography>
-  //       <Select
-  //         value={selectedYear}
-  //         onChange={(e) => handleYearSelect(e.target.value)}
-  //         className="year-select"
-  //       >
-  //         {quizState && quizState.map((quiz) => (
-  //           <MenuItem key={quiz._id} value={quiz.year}>{quiz.year}</MenuItem>
-  //         ))}
-  //       </Select>
-  //       {/* <Button variant="contained" color="primary" onClick={handleBackToSubjects}>Back to Subjects</Button> */}
-  //     </div>
-  //   );
-  // };
-
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md">
@@ -122,7 +101,7 @@ function TakeQuiz() {
           )} */}
           {
             <Grid item xs={12}>
-              {/* {renderQuiz(selectedYear)} */}
+              {renderQuiz()}
             </Grid>
           }
         </Grid>

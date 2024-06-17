@@ -22,12 +22,12 @@ const theme = createTheme({
 });
 
 const signupSchema = Yup.object({
-  firstName: Yup.string().required('First Name is required!'),
-  lastName: Yup.string().required('Last Name is required!'),
+  // firstName: Yup.string().required('First Name is required!'),
+  // lastName: Yup.string().required('Last Name is required!'),
   email: Yup.string().email('Invalid email format!').required('Email is required!'),
   password: Yup.string().min(8, 'Password must be at least 8 characters!').required('Password is required!'),
   confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
-  phone: Yup.string().required('Phone Number is required'),
+  // phone: Yup.string().required('Phone Number is required'),
   // matches(/^[0-9]{10}$/, 'Phone Number must be 10 digits')
 });
 
@@ -35,12 +35,12 @@ const Student = () => {
   const dispatch = useDispatch()
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      // firstName: '',
+      // lastName: '',
       email: '',
       password: '',
       confirmPassword: '',
-      phone: '',
+      // phone: '',
       role: 'student'
     },
     validationSchema: signupSchema,
@@ -61,7 +61,7 @@ const Student = () => {
           </Typography>
           <form onSubmit={formik.handleSubmit} className="student-registration-form">
             <Grid container spacing={3} className="student-registration-grid">
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   label="First Name"
                   variant="outlined"
@@ -90,7 +90,7 @@ const Student = () => {
                   helperText={formik.touched.lastName && formik.errors.lastName}
                   className="student-registration-input"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   label="Email"
@@ -138,7 +138,7 @@ const Student = () => {
                   className="student-registration-input"
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   label="Phone Number"
                   variant="outlined"
@@ -152,7 +152,7 @@ const Student = () => {
                   helperText={formik.touched.phone && formik.errors.phone}
                   className="student-registration-input"
                 />
-              </Grid>
+              </Grid> */}
               {/* <Grid item xs={12}>
                 <FormControl fullWidth className="student-registration-input" error={formik.touched.grade && Boolean(formik.errors.grade)}>
                   <InputLabel id="grade-label">Grade</InputLabel>

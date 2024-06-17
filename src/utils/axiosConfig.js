@@ -9,5 +9,6 @@ export const config = {
   headers: {
     Authorization: `Bearer ${getTokenFromLocalStorage() || ""}`,
     Accept: "application/json",
+    'Content-Type': 'multipart/form-data',
   },
 };
