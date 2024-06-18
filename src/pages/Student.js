@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Container, TextField, Button, Typography, Grid, Paper, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useFormik } from 'formik';
-import {registerUser} from "../features/user/userSlice";
+import {signupStudent} from "../features/user/userSlice";
 
 import * as Yup from 'yup';
 
@@ -45,7 +45,7 @@ const Student = () => {
     },
     validationSchema: signupSchema,
     onSubmit: (values) => {
-      dispatch(registerUser(values));
+      dispatch(signupStudent(values));
     },
   });
 

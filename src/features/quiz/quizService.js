@@ -1,5 +1,5 @@
 import axios from "axios";
-import { base_url, config } from "../../utils/axiosConfig";
+import { base_url, authentication } from "../../utils/axiosConfig";
 
 
 const createQuiz = async(courseId, quizData) => {

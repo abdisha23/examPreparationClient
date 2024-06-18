@@ -60,7 +60,7 @@ function MaterialAccess() {
           <div key={material._id}>
             <h3>{material.title}</h3>
             <p>{material.description}</p>
-            <a href={material.file.url} target="_blank" rel="noopener noreferrer">Download File</a>
+            <a href={material?.file?.url} target="_blank" rel="noopener noreferrer">Download File</a>
           </div>
         ))}
       </div>

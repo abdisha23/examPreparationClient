@@ -6,12 +6,12 @@ import HomePage from './pages/home';
 import UploadMaterial from './pages/UploadMaterial';
 import MaterialAccess from './pages/AccessMaterial';
 import TrackProgress from './pages/TrackProgress';
-import Quiz from './pages/Quiz';
+import TakeQuiz from './pages/TakeQuiz';
 import UploadExam from './pages/uploadExam';
 import TakeExam from './pages/TakeExam';
 import UploadQuiz from './pages/uploadQuiz';
 import Forum from './pages/Forum';
-import Signup from './pages/signup';
+// import Signup from './pages/signup';
 import Login from './pages/login';
 import ForgotPassword from './pages/ForgotPassword';
 import SME from './pages/SME';
@@ -20,7 +20,6 @@ import Admin from './pages/Admin';
 import {SecuredRoute} from './routes/SecuredRoute';
 
 const App = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
   return (
     <BrowserRouter>
       <Routes>
@@ -33,8 +32,8 @@ const App = () => {
           <Route path="take-exam" element={<SecuredRoute><TakeExam /></SecuredRoute>} />
           <Route path="/upload-quiz" element={<UploadQuiz />} />
           <Route path="/forum" element={<Forum />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/quiz" element={<Quiz />} />
+          {/* <Route path="/signup" element={<Signup />} /> */}
+          <Route path="/take-quiz" element={<SecuredRoute><TakeQuiz /></SecuredRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/sme" element={<SME />} />

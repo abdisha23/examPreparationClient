@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography, Container } from '@mui/material';
 import { useFormik } from 'formik';
-import {registerUser} from "../features/user/userSlice";
+import {registerSME} from "../features/user/userSlice";
 
 
 import * as Yup from 'yup';
@@ -33,7 +33,8 @@ const SME = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(registerUser(values));
+      console.log(values);
+      dispatch(registerSME(values));
     
     },
   });

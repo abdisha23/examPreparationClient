@@ -6,12 +6,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+  const [userState, setUserState] = useState(currentUser);
+  const userRole = useSelector((state) => state?.auth?.user?.role);
+  console.log(userRole);
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    setCurrentUser(storedUser);
-  }, [currentUser]);
   
   const theme = createTheme({
     palette: {
@@ -30,10 +29,12 @@ const Header = () => {
       },
     },
   });
+
   const  handleLogout = () => {
-    localStorage.clear();
-    setCurrentUser(null);
-    window.location.reload();
+    if(userState) {
+      localStorage.clear();
+      setUserState(null);
+    }
   }
   return (
     <ThemeProvider theme={theme}>
@@ -63,7 +64,7 @@ const Header = () => {
           <Button color="inherit" component={Link} to="/forum">
             Forums
           </Button>
-          {currentUser ? (
+          {userState !== null ? (
             <Button color="inherit" component={Link} to="/" onClick={handleLogout}>
               Logout
             </Button>
@@ -75,6 +76,9 @@ const Header = () => {
           <Button color="inherit" component={Link} to="/signup">
             Signup
           </Button>
+          {userState && userRole === 'admin' && (
+                <Button color="inherit" variant="outlined" component={Link} to="/admin">Register SME</Button>
+            )}
 
         </Toolbar>
       </AppBar>

@@ -89,7 +89,7 @@ const Forum = () => {
         subject: 'Biology',
         title: '',
         post: '',
-        postedBy: currentUser._id,
+        postedBy: currentUser?._id,
       },
       validationSchema: forumSchema,
       onSubmit: ((values) => {

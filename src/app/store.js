@@ -15,10 +15,7 @@ export const store = configureStore({
     exams: examReducer,
     quizzes: quizReducer
   },
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActionPaths: ['payload.error'],
-    },
-  }),
+  
 });
+
 

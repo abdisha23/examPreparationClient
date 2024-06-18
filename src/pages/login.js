@@ -1,29 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import CustomInput from '../components/customInput';
-import { loginUser } from '../features/user/userSlice';
-
-import {
-   Container, 
-   Typography, 
-   Grid, 
-   TextField, 
-   Button, 
-   IconButton, 
-   InputAdornment, 
-   Dialog, 
-   DialogTitle, 
-   DialogContent,
-   DialogActions, 
-   ThemeProvider,
-   createTheme, 
-   CssBaseline, 
-   GlobalStyles, 
-   styled } from '@mui/material';
+import { Container, Typography, Grid, TextField, Button, IconButton, InputAdornment, ThemeProvider, createTheme, CssBaseline, GlobalStyles, styled } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { loginUser } from '../features/user/userSlice';
 
 // Custom styles for buttons
 const CustomButton = styled(Button)({
@@ -37,8 +19,8 @@ const CustomButton = styled(Button)({
 // Custom styles for the "Forgot Password" button
 const ForgotPasswordButton = styled(Button)({
   width: '100%',
-  fontSize: '1rem', // Adjust font size as needed
-  padding: '12px', // Increase padding for larger appearance
+  fontSize: '0.5rem', // Adjust font size as needed
+  padding: '4px', // Increase padding for larger appearance
   marginTop: '10px', // Add margin for spacing
   background: '#1976d2', // Blue background
   color: 'white', // White text
@@ -66,15 +48,14 @@ const LoginPage = () => {
   const [showIncorrectDialog, setShowIncorrectDialog] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Invalid email address!')          
-      .required('Email is required!'), 
+      .email('Invalid email address!')
+      .required('Email is required!'),
     password: Yup.string().required('Password is required!'),
   });
-  
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -85,14 +66,17 @@ const LoginPage = () => {
       dispatch(loginUser(values));
     },
   });
-  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
+
+  const { isSuccess } = useSelector((state) => state.auth);
+  
   useEffect(() => {
     if (isSuccess) {
+      // window.location.reload();
       navigate('/');
     } else {
       navigate('');
     }
-  },[isSuccess]);
+  }, [isSuccess]);
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -106,7 +90,7 @@ const LoginPage = () => {
           backgroundColor: theme.palette.background.default,
         },
       }} />
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" style={{ marginTop: '70px', marginBottom: '20px' }}>
         <Typography variant="h4" align="center" gutterBottom>Login</Typography>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
@@ -121,7 +105,6 @@ const LoginPage = () => {
                 helperText={formik.touched.email && formik.errors.email}
                 variant="outlined"
                 fullWidth
-                //inputProps={{ maxLength: 8 }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -136,7 +119,6 @@ const LoginPage = () => {
                 helperText={formik.touched.password && formik.errors.password}
                 variant="outlined"
                 fullWidth
-                //inputProps={{ maxLength: 8 }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -152,7 +134,6 @@ const LoginPage = () => {
               <CustomButton variant="contained" fullWidth type="submit">Login</CustomButton>
             </Grid>
             <Grid item xs={12}>
-              {/* Styled "Forgot Password" button */}
               <ForgotPasswordButton color="inherit" variant="outlined" component={Link} to="/forgot-password">
                 Forgot Password
               </ForgotPasswordButton>
@@ -162,16 +143,6 @@ const LoginPage = () => {
             </Grid>
           </Grid>
         </form>
-
-        {/* <Dialog open={showIncorrectDialog} onClose={handleCloseDialog}>
-          <DialogTitle>Incorrect Credentials</DialogTitle>
-          <DialogContent>
-            <Typography variant="body1">Please check your username and password and try again.</Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog} color="primary">Close</Button>
-          </DialogActions>
-        </Dialog> */}
       </Container>
     </ThemeProvider>
   );

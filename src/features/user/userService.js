@@ -1,9 +1,15 @@
 import axios from "axios";
-import { base_url, config } from "../../utils/axiosConfig";
+import { base_url, authentication } from "../../utils/axiosConfig";
 
 
+const signup = async(userData) => {
+    const response = await axios.post(`${base_url}user/signup`, userData)
+    if(response.data){
+        return response.data;
+    }
+}
 const register = async(userData) => {
-    const response = await axios.post(`${base_url}user/register`, userData)
+    const response = await axios.post(`${base_url}user/register`, userData, authentication)
     if(response.data){
         return response.data;
     }
@@ -17,6 +23,7 @@ const login = async(userData) => {
 };
 
 export const userService = {
+    signup,
     register,
     login,
 }
