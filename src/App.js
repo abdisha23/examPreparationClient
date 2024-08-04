@@ -1,23 +1,22 @@
-import React from 'react';
-import {Navigate} from 'react-router-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/layout';
-import HomePage from './pages/home';
-import UploadMaterial from './pages/UploadMaterial';
-import MaterialAccess from './pages/AccessMaterial';
-import TrackProgress from './pages/TrackProgress';
-import TakeQuiz from './pages/TakeQuiz';
-import UploadExam from './pages/uploadExam';
-import TakeExam from './pages/TakeExam';
-import UploadQuiz from './pages/uploadQuiz';
-import Forum from './pages/Forum';
-// import Signup from './pages/signup';
-import Login from './pages/login';
-import ForgotPassword from './pages/ForgotPassword';
-import SME from './pages/SME';
-import Student from './pages/Student';
-import Admin from './pages/Admin';
-import {SecuredRoute} from './routes/SecuredRoute';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/layout"; // Ensure the path and case are correct
+import HomePage from "./pages/home"; // Ensure the path and case are correct
+import UploadMaterial from "./pages/UploadMaterial"; // Ensure the path and case are correct
+import MaterialAccess from "./pages/AccessMaterial"; // Ensure the path and case are correct
+import TakeQuiz from "./pages/TakeQuiz"; // Ensure the path and case are correct
+import UploadExam from "./pages/uploadExam"; // Ensure the path and case are correct
+import TakeExam from "./pages/TakeExam"; // Ensure the path and case are correct
+import UploadQuiz from "./pages/uploadQuiz"; // Ensure the path and case are correct
+import Forum from "./pages/Forum"; // Ensure the path and case are correct
+import AddCourse from "./pages/AddCourse"; // Ensure the path and case are correct
+import Login from "./pages/login"; // Ensure the path and case are correct
+import ForgotPassword from "./pages/ForgotPassword"; // Ensure the path and case are correct
+import SME from "./pages/SME"; // Ensure the path and case are correct
+import Student from "./pages/Student"; // Ensure the path and case are correct
+import Admin from "./pages/Admin"; // Ensure the path and case are correct
+import { SecuredRoute } from "./routes/SecuredRoute"; // Ensure the path and case are correct
 
 const App = () => {
   return (
@@ -25,15 +24,56 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="/upload-material" element={<UploadMaterial />} />
+          <Route
+            path="/upload-material"
+            element={
+              <SecuredRoute>
+                <UploadMaterial />
+              </SecuredRoute>
+            }
+          />
           <Route path="/access-material" element={<MaterialAccess />} />
-          <Route path="/track-progress" element={<TrackProgress />} />
-          <Route path="/upload-exam" element={<UploadExam />} />
-          <Route path="take-exam" element={<SecuredRoute><TakeExam /></SecuredRoute>} />
-          <Route path="/upload-quiz" element={<UploadQuiz />} />
+          <Route
+            path="/upload-exam"
+            element={
+              <SecuredRoute>
+                <UploadExam />
+              </SecuredRoute>
+            }
+          />
+          <Route
+            path="/take-exam"
+            element={
+              <SecuredRoute>
+                <TakeExam />
+              </SecuredRoute>
+            }
+          />
+          <Route
+            path="/upload-quiz"
+            element={
+              <SecuredRoute>
+                <UploadQuiz />
+              </SecuredRoute>
+            }
+          />
           <Route path="/forum" element={<Forum />} />
-          {/* <Route path="/signup" element={<Signup />} /> */}
-          <Route path="/take-quiz" element={<SecuredRoute><TakeQuiz /></SecuredRoute>} />
+          <Route
+            path="/take-quiz"
+            element={
+              <SecuredRoute>
+                <TakeQuiz />
+              </SecuredRoute>
+            }
+          />
+          <Route
+            path="/add-course"
+            element={
+              <SecuredRoute>
+                <AddCourse />
+              </SecuredRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/sme" element={<SME />} />

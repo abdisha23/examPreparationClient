@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
   Typography,
@@ -14,56 +14,56 @@ import {
   Paper,
   Box,
   Grid,
-  Divider
-} from '@mui/material';
-import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
-import * as Yup from 'yup';
-import {createForumPost, getForumPost} from "../features/forum/forumSlice";
-import { getAllCourses } from '../features/course/courseSlice';
+  Divider,
+} from "@mui/material";
+import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
+import * as Yup from "yup";
+import { createForumPost, getForumPost } from "../features/forum/forumSlice";
+import { getAllCourses } from "../features/course/courseSlice";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#4A4A4A',
+      main: "#4A4A4A",
     },
     secondary: {
-      main: '#D7DCE2',
+      main: "#D7DCE2",
     },
     background: {
-      default: '#F5F5F5',
+      default: "#F5F5F5",
     },
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: "Roboto, sans-serif",
     h4: {
-      fontWeight: 'bold',
-      marginBottom: '20px',
+      fontWeight: "bold",
+      marginBottom: "20px",
     },
     h5: {
-      fontWeight: 'bold',
-      marginBottom: '10px',
+      fontWeight: "bold",
+      marginBottom: "10px",
     },
     h6: {
-      fontWeight: 'bold',
-      marginBottom: '10px',
+      fontWeight: "bold",
+      marginBottom: "10px",
     },
     subtitle1: {
-      color: '#2D2D2D',
+      color: "#2D2D2D",
     },
     subtitle2: {
-      color: '#5A5A5A',
+      color: "#5A5A5A",
     },
     body1: {
-      color: '#7A7A7A',
+      color: "#7A7A7A",
     },
     body2: {
-      color: '#9A9A9A',
+      color: "#9A9A9A",
     },
   },
 });
 const forumSchema = Yup.object().shape({
-  title: Yup.string().required('Title is required'),
-  post: Yup.string().required('Content is required'),
+  title: Yup.string().required("Title is required"),
+  content: Yup.string().required("Content is required"),
 });
 const Forum = () => {
   const dispatch = useDispatch();
@@ -71,38 +71,48 @@ const Forum = () => {
   const [discussions, setDiscussions] = useState([]);
 
   useEffect(() => {
-    dispatch(getForumPost())
+    dispatch(getForumPost());
     dispatch(getAllCourses());
-    const fetchedCategories = ['General', 'Technical', 'Q&A'];
+    const fetchedCategories = ["General", "Technical", "Q&A"];
     const fetchedDiscussions = [
-      { id: 1, category: 'General', topic: 'Welcome to the Forum', author: 'Admin', responses: 10 },
-      { id: 2, category: 'Technical', topic: {}, author: 'UserA', responses: 5 },
+      {
+        id: 1,
+        category: "General",
+        topic: "Welcome to the Forum",
+        author: "Admin",
+        responses: 10,
+      },
+      {
+        id: 2,
+        category: "Technical",
+        topic: {},
+        author: "UserA",
+        responses: 5,
+      },
     ];
     setCategories(fetchedCategories);
     setDiscussions(fetchedDiscussions);
   }, []);
 
-  const currentUser = JSON.parse(localStorage.getItem('user'));
+  const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const formik = useFormik({
     initialValues: {
-        subject: 'Biology',
-        title: '',
-        post: '',
-        postedBy: currentUser?._id,
-      },
-      validationSchema: forumSchema,
-      onSubmit: ((values) => {
-        dispatch(createForumPost(values));
-        }),
-    });
-
+      title: "",
+      content: "",
+    },
+    validationSchema: forumSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      dispatch(createForumPost({ forumData: values }));
+    },
+  });
 
   // const handlePostSubmit = (values, { resetForm }) => {
   //   dispatch((values));
   //   // resetForm();
   // };
-const forumState = useSelector((state) => state?.forum?.allForumPosts);
+  const forumState = useSelector((state) => state?.forum?.allForumPosts);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -111,13 +121,14 @@ const forumState = useSelector((state) => state?.forum?.allForumPosts);
         component={Paper}
         elevation={3}
         style={{
-          minHeight: '80vh',
-          padding: '40px',
-          marginTop: '80px',
-          backgroundColor: '#F5F5F5',
-        }}
-      >
-        <Typography variant="h4" style={{ color: '#4A4A4A', marginBottom: '20px' }}>
+          minHeight: "80vh",
+          padding: "40px",
+          marginTop: "80px",
+          backgroundColor: "#F5F5F5",
+        }}>
+        <Typography
+          variant="h4"
+          style={{ color: "#4A4A4A", marginBottom: "20px" }}>
           Welcome to the Forum
         </Typography>
 
@@ -136,59 +147,71 @@ const forumState = useSelector((state) => state?.forum?.allForumPosts);
           </Grid> */}
 
           <Grid item xs={12} sm={6}>
-            <Typography variant="h5" style={{ color: '#4A4A4A', marginBottom: '10px' }}>
+            <Typography
+              variant="h5"
+              style={{ color: "#4A4A4A", marginBottom: "10px" }}>
               Discussions
             </Typography>
             {forumState?.map((forum, index) => (
-              <Box key={index} style={{ marginBottom: '20px' }}>
+              <Box key={index} style={{ marginBottom: "20px" }}>
                 <Typography variant="h6">{forum.title}</Typography>
-                <Typography variant="subtitle2">Question: {forum.post}</Typography>
-                <Typography variant="body1">Posted by: {forum.postedBy}</Typography>
+                <Typography variant="subtitle2">
+                  Question: {forum.content}
+                </Typography>
+                <Typography variant="body1">
+                  Posted by: {forum.postedBy}
+                </Typography>
                 {/* <Typography variant="body2">Responses: {forum.postReplies.map((reply, index) => {
                   reply.title
                 })}</Typography> */}
-                <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
+                <Divider style={{ marginTop: "10px", marginBottom: "10px" }} />
               </Box>
             ))}
           </Grid>
         </Grid>
 
-        <Divider style={{ marginTop: '20px', marginBottom: '20px' }} />
+        <Divider style={{ marginTop: "20px", marginBottom: "20px" }} />
 
-        <Typography variant="h5" style={{ color: '#4A4A4A', marginBottom: '20px' }}>
+        <Typography
+          variant="h5"
+          style={{ color: "#4A4A4A", marginBottom: "20px" }}>
           Create a Post
         </Typography>
-            <form onSubmit={formik.handleSubmit}>
-              <TextField
-                name="title"
-                label="Post Title"
-                variant="outlined"
-                fullWidth
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.title && Boolean(formik.errors.title)}
-                helperText={formik.touched.title && formik.errors.title}
-                style={{ marginBottom: '20px' }}
-              />
-              <TextField
-                name="post"
-                label="Post Content"
-                multiline
-                rows={4}
-                variant="outlined"
-                fullWidth
-                value={formik.values.post}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.post && Boolean(formik.errors.post)}
-                helperText={formik.touched.post && formik.errors.post}
-                style={{ marginBottom: '20px' }}
-              />
-              <Button type="submit" variant="contained" color="primary" style={{ marginTop: '10px' }}>
-                Post
-              </Button>
-            </form>
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
+            name="title"
+            label="Post Title"
+            variant="outlined"
+            fullWidth
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
+            style={{ marginBottom: "20px" }}
+          />
+          <TextField
+            name="content"
+            label="Post Content"
+            multiline
+            rows={4}
+            variant="outlined"
+            fullWidth
+            value={formik.values.content}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.content && Boolean(formik.errors.content)}
+            helperText={formik.touched.content && formik.errors.content}
+            style={{ marginBottom: "20px" }}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            style={{ marginTop: "10px" }}>
+            Post
+          </Button>
+        </form>
       </Container>
     </ThemeProvider>
   );

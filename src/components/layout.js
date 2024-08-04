@@ -1,15 +1,16 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from './header';
-import Footer from './footer';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "./header";
+import Footer from "./footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = () => {
   return (
-      <div>
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
-      <div>
+      <div style={{ flex: "1 0 auto" }}>
         <Outlet />
       </div>
       <Footer />
@@ -26,8 +27,7 @@ const Layout = () => {
         theme="light"
       />
     </div>
-    
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
